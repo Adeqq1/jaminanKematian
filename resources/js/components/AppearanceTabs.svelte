@@ -1,6 +1,4 @@
 <script lang="ts">
-    import Monitor from '@lucide/svelte/icons/monitor';
-    import Moon from '@lucide/svelte/icons/moon';
     import Sun from '@lucide/svelte/icons/sun';
     import type { Component, SvelteComponent } from 'svelte';
     import { themeState } from '@/lib/theme.svelte';
@@ -13,9 +11,7 @@
         | (new (...args: any[]) => SvelteComponent<{ class?: string }>);
 
     const tabs: { value: Appearance; Icon: IconComponent; label: string }[] = [
-        { value: 'light', Icon: Sun, label: 'Light' },
-        { value: 'dark', Icon: Moon, label: 'Dark' },
-        { value: 'system', Icon: Monitor, label: 'System' },
+        { value: 'light', Icon: Sun, label: 'Terang' },
     ];
 
     function handleAppearanceChange(value: Appearance) {
@@ -29,6 +25,7 @@
     {#each tabs as { value, Icon, label } (value)}
         <button
             onclick={() => handleAppearanceChange(value)}
+            aria-pressed={appearance.value === value}
             class="flex items-center rounded-md px-3.5 py-1.5 transition-colors {appearance.value ===
             value
                 ? 'bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100'

@@ -13,8 +13,8 @@
 
 <script lang="ts">
     import {
-        Form /* @chisel-2fa-or-passkeys */,
-        page /* @end-chisel-2fa-or-passkeys */,
+        Form ,
+        page,
     } from '@inertiajs/svelte';
     import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
     import AppHead from '@/components/AppHead.svelte';
@@ -23,41 +23,33 @@
     import PasswordInput from '@/components/PasswordInput.svelte';
     import { Button } from '@/components/ui/button';
     import { Label } from '@/components/ui/label';
-    /* @chisel-2fa */
     import ManageTwoFactor from '@/components/ManageTwoFactor.svelte';
-    /* @end-chisel-2fa */
-    /* @chisel-passkeys */
     import ManagePasskeys from '@/components/ManagePasskeys.svelte';
     import type { Props as ManagePasskeysProps } from '@/components/ManagePasskeys.svelte';
-    /* @end-chisel-passkeys */
-    /* @chisel-2fa */
     const canManageTwoFactor = $derived(Boolean(page.props.canManageTwoFactor));
     const requiresConfirmation = $derived(
         Boolean(page.props.requiresConfirmation),
     );
     const twoFactorEnabled = $derived(Boolean(page.props.twoFactorEnabled));
-    /* @end-chisel-2fa */
-    /* @chisel-passkeys */
     const canManagePasskeys = $derived(Boolean(page.props.canManagePasskeys));
     const passkeys = $derived(
         (Array.isArray(page.props.passkeys)
             ? page.props.passkeys
             : []) as ManagePasskeysProps['passkeys'],
     );
-    /* @end-chisel-passkeys */
 
     let { passwordRules }: { passwordRules: string } = $props();
 </script>
 
-<AppHead title="Security settings" />
+<AppHead title="Keamanan akun" />
 
-<h1 class="sr-only">Security settings</h1>
+<h1 class="sr-only">Keamanan akun</h1>
 
 <div class="space-y-6">
     <Heading
         variant="small"
-        title="Update password"
-        description="Ensure your account is using a long, random password to stay secure"
+        title="Ubah kata sandi"
+        description="Gunakan kata sandi yang panjang dan sulit ditebak"
     />
 
     <Form
@@ -119,14 +111,10 @@
     </Form>
 </div>
 
-<!-- @chisel-2fa -->
 <ManageTwoFactor
     {canManageTwoFactor}
     {requiresConfirmation}
     {twoFactorEnabled}
 />
-<!-- @end-chisel-2fa -->
 
-<!-- @chisel-passkeys -->
 <ManagePasskeys {canManagePasskeys} {passkeys} />
-<!-- @end-chisel-passkeys -->

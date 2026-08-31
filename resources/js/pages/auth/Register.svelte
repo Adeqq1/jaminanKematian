@@ -1,7 +1,7 @@
 <script module lang="ts">
     export const layout = {
-        title: 'Create an account',
-        description: 'Enter your details below to create your account',
+        title: 'Daftar sebagai peserta',
+        description: 'Daftarkan data kepesertaan Anda',
     };
 </script>
 
@@ -25,39 +25,53 @@
 
 <Form
     {...store.form()}
+    forceFormData
     resetOnSuccess={['password', 'password_confirmation']}
     class="flex flex-col gap-6"
 >
     {#snippet children({ errors, processing })}
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="name">Name</Label>
+                <Label for="name">Nama lengkap</Label>
                 <Input
                     id="name"
                     type="text"
                     required
                     autocomplete="name"
                     name="name"
-                    placeholder="Full name"
+                    placeholder="Nama lengkap"
                 />
                 <InputError message={errors.name} />
             </div>
 
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="nik">NIK</Label>
                 <Input
-                    id="email"
-                    type="email"
+                    id="nik"
+                    type="text"
                     required
-                    autocomplete="email"
-                    name="email"
-                    placeholder="email@example.com"
+                    inputmode="numeric"
+                    autocomplete="username"
+                    name="nik"
+                    placeholder="16 digit NIK"
                 />
-                <InputError message={errors.email} />
+                <InputError message={errors.nik} />
             </div>
 
             <div class="grid gap-2">
-                <Label for="password">Password</Label>
+                <Label for="no_hp">Nomor HP</Label>
+                <Input id="no_hp" type="tel" required name="no_hp" placeholder="08xxxxxxxxxx" />
+                <InputError message={errors.no_hp} />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="foto_ktp">Foto KTP</Label>
+                <Input id="foto_ktp" type="file" required name="foto_ktp" accept="image/jpeg,image/png,application/pdf" />
+                <InputError message={errors.foto_ktp} />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="password">Kata sandi</Label>
                 <PasswordInput
                     id="password"
                     required
@@ -70,7 +84,7 @@
             </div>
 
             <div class="grid gap-2">
-                <Label for="password_confirmation">Confirm password</Label>
+                <Label for="password_confirmation">Ulangi kata sandi</Label>
                 <PasswordInput
                     id="password_confirmation"
                     required
@@ -89,14 +103,14 @@
                 data-test="register-user-button"
             >
                 {#if processing}<Spinner />{/if}
-                Create account
+                Daftar
             </Button>
         </div>
 
         <div class="text-center text-sm text-muted-foreground">
-            Already have an account?
+            Sudah punya akun?
             <TextLink href={login()} class="underline underline-offset-4">
-                Log in
+                Masuk
             </TextLink>
         </div>
     {/snippet}

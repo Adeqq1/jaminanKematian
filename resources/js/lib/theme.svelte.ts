@@ -12,18 +12,8 @@ export type ThemeState = {
 
 const appearance = $state<{ value: Appearance }>({ value: 'system' });
 
-let themeChangeMediaQuery: MediaQueryList | null = null;
-
-const prefersDark = (): boolean => {
-    if (typeof window === 'undefined') {
-        return false;
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-};
-
 const isDarkMode = (value: Appearance): boolean => {
-    return value === 'dark' || (value === 'system' && prefersDark());
+    return value === 'dark';
 };
 
 const getResolvedAppearance = (): ResolvedAppearance => {
@@ -49,52 +39,17 @@ const applyTheme = (value: Appearance): void => {
     document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
 };
 
-const getStoredAppearance = (): Appearance => {
-    if (typeof window === 'undefined') {
-        return 'system';
-    }
-
-    const stored = localStorage.getItem('appearance');
-
-    return stored === 'light' || stored === 'dark' || stored === 'system'
-        ? stored
-        : 'system';
-};
-
-const handleSystemThemeChange = (): void => {
-    applyTheme(appearance.value);
-};
-
-const detachThemeChangeListener = (): void => {
-    if (!themeChangeMediaQuery) {
-        return;
-    }
-
-    themeChangeMediaQuery.removeEventListener(
-        'change',
-        handleSystemThemeChange,
-    );
-    themeChangeMediaQuery = null;
-};
-
 export function initializeTheme(): () => void {
     if (typeof window === 'undefined') {
         return () => {};
     }
 
-    if (!localStorage.getItem('appearance')) {
-        localStorage.setItem('appearance', 'system');
-        setCookie('appearance', 'system');
-    }
+    localStorage.setItem('appearance', 'light');
+    setCookie('appearance', 'light');
+    appearance.value = 'light';
+    applyTheme('light');
 
-    appearance.value = getStoredAppearance();
-    applyTheme(appearance.value);
-
-    detachThemeChangeListener();
-    themeChangeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    themeChangeMediaQuery.addEventListener('change', handleSystemThemeChange);
-
-    return detachThemeChangeListener;
+    return () => {};
 }
 
 export function updateAppearance(value: Appearance): void {

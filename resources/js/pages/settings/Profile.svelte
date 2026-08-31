@@ -18,15 +18,9 @@
     import DeleteUser from '@/components/DeleteUser.svelte';
     import Heading from '@/components/Heading.svelte';
     import InputError from '@/components/InputError.svelte';
-    /* @chisel-email-verification */
-    import TextLink from '@/components/TextLink.svelte';
-    /* @end-chisel-email-verification */
     import { Button } from '@/components/ui/button';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
-    /* @chisel-email-verification */
-    import { send } from '@/routes/verification';
-    /* @end-chisel-email-verification */
 
     const user = $derived(page.props.auth.user);
 </script>
@@ -38,8 +32,8 @@
 <div class="flex flex-col space-y-6">
     <Heading
         variant="small"
-        title="Profile"
-        description="Update your name and email address"
+        title="Profil peserta"
+        description="Perbarui data dasar akun Anda"
     />
 
     <Form
@@ -49,7 +43,7 @@
     >
         {#snippet children({ errors, processing })}
             <div class="grid gap-2">
-                <Label for="name">Name</Label>
+                <Label for="name">Nama lengkap</Label>
                 <Input
                     id="name"
                     name="name"
@@ -63,39 +57,18 @@
             </div>
 
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="username">NIK</Label>
                 <Input
-                    id="email"
-                    type="email"
-                    name="email"
+                    id="username"
+                    name="username"
                     class="mt-1 block w-full"
-                    value={user.email}
+                    value={user.username}
                     required
                     autocomplete="username"
-                    placeholder="Email address"
+                    placeholder="NIK"
                 />
-                <InputError class="mt-2" message={errors.email} />
+                <InputError class="mt-2" message={errors.username} />
             </div>
-
-            <!-- @chisel-email-verification -->
-            {#if Boolean(page.props.mustVerifyEmail) && !user.email_verified_at}
-                <div>
-                    <p class="-mt-4 text-sm text-muted-foreground">
-                        Your email address is unverified.
-                        <TextLink href={send()} as="button">
-                            Click here to re-send the verification email.
-                        </TextLink>
-                    </p>
-
-                    {#if page.props.status === 'verification-link-sent'}
-                        <div class="mt-2 text-sm font-medium text-green-600">
-                            A new verification link has been sent to your email
-                            address.
-                        </div>
-                    {/if}
-                </div>
-            {/if}
-            <!-- @end-chisel-email-verification -->
 
             <div class="flex items-center gap-4">
                 <Button
