@@ -20,7 +20,7 @@ class PengajuanKlaimController extends Controller
         }
         $peserta = $user->peserta()->with(['pengajuanKlaim.nomorAntrian'])->firstOrFail();
 
-        return Inertia::render('Dashboard', ['peserta' => $peserta, 'pengajuan' => $peserta->pengajuanKlaim]);
+        return Inertia::render('Dashboard', ['peserta' => $peserta, 'pengajuan' => $peserta->pengajuanKlaim, 'bankGroups' => config('banks')]);
     }
 
     public function store(StorePengajuanKlaimRequest $request)
@@ -28,6 +28,9 @@ class PengajuanKlaimController extends Controller
         $peserta = $request->user()->peserta;
         abort_unless($peserta && ! $peserta->pengajuanKlaim()->exists(), 422, 'Pengajuan klaim sudah pernah dibuat.');
         $data = $request->validated();
+        $bankChoice = $data['bank_choice'];
+        $data['nama_bank'] = $bankChoice === '__other__' ? trim($data['nama_bank_lainnya']) : $bankChoice;
+        unset($data['bank_choice'], $data['nama_bank_lainnya']);
         $paths = [];
         try {
             foreach (['akta_kematian', 'kartu_bpjs', 'buku_rekening'] as $key) {

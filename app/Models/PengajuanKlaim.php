@@ -10,7 +10,7 @@ class PengajuanKlaim extends Model
 {
     protected $table = 'pengajuan_klaim';
 
-    protected $fillable = ['peserta_id', 'nama_ahli_waris', 'no_hp_peserta', 'no_hp_ahli_waris', 'nik_peserta', 'akta_kematian', 'kartu_bpjs', 'keterangan_ahli_waris', 'nomor_rekening_ahli_waris', 'buku_rekening'];
+    protected $fillable = ['peserta_id', 'nama_ahli_waris', 'no_hp_peserta', 'no_hp_ahli_waris', 'nik_peserta', 'akta_kematian', 'kartu_bpjs', 'keterangan_ahli_waris', 'nomor_rekening_ahli_waris', 'nama_bank', 'buku_rekening'];
 
     public function peserta(): BelongsTo
     {

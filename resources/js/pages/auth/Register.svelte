@@ -21,7 +21,7 @@
     let { passwordRules }: { passwordRules: string } = $props();
 </script>
 
-<AppHead title="Register" />
+<AppHead title="Daftar" />
 
 <Form
     {...store.form()}
@@ -54,19 +54,25 @@
                     autocomplete="username"
                     name="nik"
                     placeholder="16 digit NIK"
+                    minlength={16}
+                    maxlength={16}
+                    pattern="[0-9]{16}"
                 />
+                <p class="text-xs text-muted-foreground">Masukkan 16 digit tanpa spasi. NIK digunakan untuk masuk.</p>
                 <InputError message={errors.nik} />
             </div>
 
             <div class="grid gap-2">
                 <Label for="no_hp">Nomor HP</Label>
-                <Input id="no_hp" type="tel" required name="no_hp" placeholder="08xxxxxxxxxx" />
+                <Input id="no_hp" type="tel" required name="no_hp" autocomplete="tel" inputmode="tel" placeholder="08xxxxxxxxxx" />
+                <p class="text-xs text-muted-foreground">Gunakan nomor HP yang aktif agar petugas dapat menghubungi Anda.</p>
                 <InputError message={errors.no_hp} />
             </div>
 
             <div class="grid gap-2">
                 <Label for="foto_ktp">Foto KTP</Label>
                 <Input id="foto_ktp" type="file" required name="foto_ktp" accept="image/jpeg,image/png,application/pdf" />
+                <p class="text-xs text-muted-foreground">JPG, PNG, atau PDF · maksimal 5 MB.</p>
                 <InputError message={errors.foto_ktp} />
             </div>
 
@@ -77,10 +83,11 @@
                     required
                     autocomplete="new-password"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Kata sandi"
                     passwordrules={passwordRules}
                 />
                 <InputError message={errors.password} />
+                <p class="text-xs text-muted-foreground">Gunakan kata sandi yang panjang dan mudah Anda ingat.</p>
             </div>
 
             <div class="grid gap-2">
@@ -90,7 +97,7 @@
                     required
                     autocomplete="new-password"
                     name="password_confirmation"
-                    placeholder="Confirm password"
+                    placeholder="Ulangi kata sandi"
                     passwordrules={passwordRules}
                 />
                 <InputError message={errors.password_confirmation} />

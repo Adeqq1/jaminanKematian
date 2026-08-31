@@ -1,7 +1,7 @@
 <script module lang="ts">
     export const layout = {
         title: 'Masuk ke akun',
-        description: 'Masukkan NIK dan password untuk masuk',
+        description: 'Masukkan NIK dan kata sandi untuk masuk',
     };
 </script>
 
@@ -56,6 +56,9 @@
                     inputmode="numeric"
                     autocomplete="username"
                     placeholder="16 digit NIK"
+                    minlength={16}
+                    maxlength={16}
+                    pattern="[0-9]{16}"
                 />
                 <InputError message={errors.username} />
             </div>
@@ -69,7 +72,7 @@
                     name="password"
                     required
                     autocomplete="current-password"
-                    placeholder="Password"
+                    placeholder="Kata sandi"
                 />
                 <InputError message={errors.password} />
             </div>
@@ -91,6 +94,8 @@
                 Masuk
             </Button>
         </div>
+
+        <p class="text-center text-xs text-muted-foreground">Lupa kata sandi? <a class="font-medium text-primary underline" href="tel:+628136184563">Hubungi petugas</a>.</p>
 
         <div class="text-center text-sm text-muted-foreground">
              Belum punya akun?
