@@ -15,6 +15,8 @@ class Peserta extends Model
 
     protected $fillable = ['user_id', 'nama', 'no_hp', 'nik', 'foto_ktp'];
 
+    protected $hidden = ['foto_ktp'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

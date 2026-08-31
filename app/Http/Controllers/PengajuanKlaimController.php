@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePengajuanKlaimRequest;
 use App\Models\NomorAntrian;
 use App\Models\PengajuanKlaim;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use App\Services\ClaimPdf;
 
 class PengajuanKlaimController extends Controller
 {
@@ -55,19 +55,34 @@ class PengajuanKlaimController extends Controller
         }
     }
 
-    public function pdf(PengajuanKlaim $pengajuan)
+    public function pdf(PengajuanKlaim $pengajuan, ClaimPdf $claimPdf)
     {
         $this->authorizeAccess($pengajuan);
 
-        return Pdf::loadView('pengajuan-klaim.pdf', ['pengajuan' => $pengajuan->load(['peserta', 'nomorAntrian'])])->download('nomor-antrean-'.$pengajuan->nomorAntrian->nomor_urut.'.pdf');
+        $content = $claimPdf->generate($pengajuan);
+        return response($content, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="pengajuan-klaim-'.$pengajuan->id.'-antrean-'.$pengajuan->nomorAntrian->nomor_urut.'.pdf"',
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     public function document(PengajuanKlaim $pengajuan, string $document)
     {
         $this->authorizeAccess($pengajuan);
-        abort_unless(in_array($document, ['akta_kematian', 'kartu_bpjs', 'buku_rekening'], true), 404);
+        if ($document === 'foto_ktp') {
+            $path = $pengajuan->peserta->foto_ktp;
+        } else {
+            abort_unless(in_array($document, ['akta_kematian', 'kartu_bpjs', 'buku_rekening'], true), 404);
+            $path = $pengajuan->{$document};
+        }
+        abort_unless(Storage::disk('local')->exists($path), 404);
 
-        return response()->file(Storage::disk('local')->path($pengajuan->{$document}));
+        return response()->file(Storage::disk('local')->path($path), [], [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     private function authorizeAccess(PengajuanKlaim $pengajuan): void
