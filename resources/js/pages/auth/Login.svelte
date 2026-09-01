@@ -56,9 +56,10 @@
                     inputmode="numeric"
                     autocomplete="username"
                     placeholder="16 digit NIK"
-                    minlength={16}
                     maxlength={16}
-                    pattern="[0-9]{16}"
+                    oninput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 16);
+                    }}
                 />
                 <InputError message={errors.username} />
             </div>

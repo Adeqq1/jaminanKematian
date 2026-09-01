@@ -19,6 +19,8 @@
     import { store } from '@/routes/register';
 
     let { passwordRules }: { passwordRules: string } = $props();
+
+    let nikValue = $state('');
 </script>
 
 <AppHead title="Daftar" />
@@ -45,7 +47,14 @@
             </div>
 
             <div class="grid gap-2">
-                <Label for="nik">NIK</Label>
+                <div class="flex items-center justify-between">
+                    <Label for="nik">NIK</Label>
+                    {#if nikValue.length > 0}
+                        <span class="text-xs {nikValue.length === 16 ? 'text-emerald-600 font-medium' : 'text-amber-600 font-medium'}">
+                            {nikValue.length}/16 digit
+                        </span>
+                    {/if}
+                </div>
                 <Input
                     id="nik"
                     type="text"
@@ -54,17 +63,31 @@
                     autocomplete="username"
                     name="nik"
                     placeholder="16 digit NIK"
-                    minlength={16}
                     maxlength={16}
-                    pattern="[0-9]{16}"
+                    bind:value={nikValue}
+                    oninput={(e) => {
+                        nikValue = e.currentTarget.value.replace(/\D/g, '').slice(0, 16);
+                        e.currentTarget.value = nikValue;
+                    }}
                 />
-                <p class="text-xs text-muted-foreground">Masukkan 16 digit tanpa spasi. NIK digunakan untuk masuk.</p>
+                <p class="text-xs text-muted-foreground">Masukkan 16 digit NIK sesuai KTP tanpa spasi.</p>
                 <InputError message={errors.nik} />
             </div>
 
             <div class="grid gap-2">
                 <Label for="no_hp">Nomor HP</Label>
-                <Input id="no_hp" type="tel" required name="no_hp" autocomplete="tel" inputmode="tel" placeholder="08xxxxxxxxxx" />
+                <Input
+                    id="no_hp"
+                    type="tel"
+                    required
+                    name="no_hp"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    placeholder="08xxxxxxxxxx"
+                    oninput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9+]/g, '').slice(0, 16);
+                    }}
+                />
                 <p class="text-xs text-muted-foreground">Gunakan nomor HP yang aktif agar petugas dapat menghubungi Anda.</p>
                 <InputError message={errors.no_hp} />
             </div>
