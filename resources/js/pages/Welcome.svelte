@@ -20,13 +20,13 @@
     ];
 </script>
 
-<AppHead title="Pelayanan Klaim Jaminan Kematian" />
+<AppHead title="Pelayanan Jaminan Kematian" />
 
 <div class="min-h-screen bg-[#f4f8fa] text-[#17252f]">
     <header class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-10">
-        <Link href="/" class="flex items-center gap-3" aria-label="Pelayanan Klaim Jaminan Kematian">
+        <Link href="/" class="flex items-center gap-3" aria-label="Pelayanan Jaminan Kematian">
             <span class="flex size-10 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground">PK</span>
-            <span class="max-w-44 text-sm font-semibold leading-tight text-primary sm:max-w-none">Pelayanan Klaim<br class="sm:hidden" /> Jaminan Kematian</span>
+            <span class="max-w-44 text-sm font-semibold leading-tight text-primary sm:max-w-none">Pelayanan<br class="sm:hidden" /> Jaminan Kematian</span>
         </Link>
         <nav class="flex items-center gap-2 text-sm font-medium sm:gap-4">
             {#if auth.user}
@@ -42,7 +42,7 @@
         <section class="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-10 lg:pb-24 lg:pt-20">
             <div>
                 <p class="mb-5 inline-flex items-center gap-2 rounded-full bg-[#dceff0] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#126b68]"><ShieldCheck class="size-4" /> Layanan digital Kabupaten Bungo</p>
-                <h1 class="max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-primary sm:text-6xl">Ajukan klaim dengan langkah yang lebih jelas.</h1>
+                <h1 class="max-w-2xl text-4xl font-semibold leading-[1.08] tracking-tight text-primary sm:text-6xl">Ajukan permohonan dengan langkah yang lebih jelas.</h1>
                 <p class="mt-6 max-w-xl text-base leading-7 text-[#536673] sm:text-lg">Lengkapi data secara online, siapkan dokumen, dan dapatkan nomor antrean sebelum datang ke kantor pelayanan.</p>
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                     <Link href={auth.user ? dashboard() : register()} class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 font-semibold text-primary-foreground shadow-lg shadow-primary/15 hover:bg-[#0b2c47]">{auth.user ? 'Buka pengajuan' : 'Daftar sebagai peserta'} <ArrowRight class="size-4" /></Link>
@@ -52,7 +52,7 @@
             </div>
             <div class="relative overflow-hidden rounded-3xl bg-primary p-7 text-white shadow-2xl shadow-primary/15 sm:p-10">
                 <div class="absolute -right-16 -top-16 size-48 rounded-full border-[24px] border-[#2f6079] opacity-60"></div>
-                <div class="relative"><p class="text-sm font-medium text-teal-200">Yang akan Anda dapatkan</p><p class="mt-3 text-3xl font-semibold leading-tight">Bukti pengajuan dan nomor antrean dalam satu tempat.</p><div class="mt-8 space-y-4">{#each ['Formulir tersimpan', 'Nomor antrean harian', 'Bukti PDF siap diunduh'] as item}<div class="flex items-center gap-3 text-sm text-slate-100"><CheckCircle2 class="size-5 text-teal-300" /> {item}</div>{/each}</div><div class="mt-10 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-slate-200">Pelayanan Klaim Jaminan Kematian<br /><span class="font-semibold text-white">Senin–Jumat · 08.00–16.00 WIB</span></div></div>
+                <div class="relative"><p class="text-sm font-medium text-teal-200">Yang akan Anda dapatkan</p><p class="mt-3 text-3xl font-semibold leading-tight">Bukti pengajuan dan nomor antrean dalam satu tempat.</p><div class="mt-8 space-y-4">{#each ['Formulir tersimpan', 'Nomor antrean harian', 'Bukti PDF siap diunduh'] as item}<div class="flex items-center gap-3 text-sm text-slate-100"><CheckCircle2 class="size-5 text-teal-300" /> {item}</div>{/each}</div><div class="mt-10 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-slate-200">Pelayanan Jaminan Kematian<br /><span class="font-semibold text-white">Senin–Jumat · 08.00–16.00 WIB</span></div></div>
             </div>
         </section>
 
@@ -62,5 +62,5 @@
 
         <section class="bg-primary text-white"><div class="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:grid-cols-[1fr_auto] sm:items-center lg:px-10"><div><h2 class="text-2xl font-semibold">Perlu bantuan?</h2><p class="mt-2 text-sm leading-6 text-slate-200">Hubungi kantor pelayanan pada jam kerja jika membutuhkan bantuan akses atau koreksi data.</p></div><div class="rounded-xl bg-white/10 px-5 py-4 text-sm leading-6"><strong>+62 813-6184-563</strong><br />08.00–16.00 WIB</div></div></section>
     </main>
-    <footer class="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-8 text-xs text-[#657680] sm:flex-row sm:items-center sm:justify-between lg:px-10"><span>Pelayanan Klaim Jaminan Kematian · Kabupaten Bungo</span><span>Jl. Sultan Thaha No.111, Muara Bungo, Jambi 37211</span></footer>
+    <footer class="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-8 text-xs text-[#657680] sm:flex-row sm:items-center sm:justify-between lg:px-10"><span>Pelayanan Jaminan Kematian · Kabupaten Bungo</span><span>Jl. Sultan Thaha No.111, Muara Bungo, Jambi 37211</span></footer>
 </div>

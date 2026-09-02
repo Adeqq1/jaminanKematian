@@ -26,7 +26,7 @@ class PengajuanKlaimController extends Controller
     public function store(StorePengajuanKlaimRequest $request)
     {
         $peserta = $request->user()->peserta;
-        abort_unless($peserta && ! $peserta->pengajuanKlaim()->exists(), 422, 'Pengajuan klaim sudah pernah dibuat.');
+        abort_unless($peserta && ! $peserta->pengajuanKlaim()->exists(), 422, 'Pengajuan sudah pernah dibuat.');
         $data = $request->validated();
         $bankChoice = $data['bank_choice'];
         $data['nama_bank'] = $bankChoice === '__other__' ? trim($data['nama_bank_lainnya']) : $bankChoice;
@@ -40,7 +40,7 @@ class PengajuanKlaimController extends Controller
                 $pengajuan = $peserta->pengajuanKlaim()->create(array_merge($data, $paths));
                 $today = now()->toDateString();
                 $last = NomorAntrian::whereDate('tanggal_antrian', $today)->lockForUpdate()->max('nomor_urut') ?? 0;
-                $pengajuan->nomorAntrian()->create(['nomor_urut' => $last + 1, 'tanggal_antrian' => $today, 'jenis_pelayanan' => 'Klaim Jaminan Kematian', 'nomor_loket' => 'Loket 1', 'waktu_pengambilan' => now()]);
+                $pengajuan->nomorAntrian()->create(['nomor_urut' => $last + 1, 'tanggal_antrian' => $today, 'jenis_pelayanan' => 'Jaminan Kematian', 'nomor_loket' => 'Loket 1', 'waktu_pengambilan' => now()]);
 
                 return $pengajuan->load('nomorAntrian');
             });

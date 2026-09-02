@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
-    <title>Bukti Pengajuan Klaim</title>
+    <title>Bukti Pengajuan</title>
     <style>
         @page { margin: 0; }
         * { box-sizing: border-box; }
@@ -38,7 +38,7 @@
     <div class="page">
         <div class="header">
             <div class="eyebrow">Pelayanan publik Kabupaten Bungo</div>
-            <h1>Pelayanan Klaim Jaminan Kematian</h1>
+            <h1>Pelayanan Jaminan Kematian</h1>
             <div class="subtitle">Bukti pengajuan dan nomor antrean layanan</div>
         </div>
 
@@ -48,7 +48,7 @@
             <table class="ticket-table">
                 <tr>
                     <td><div class="number-label">Nomor antrean</div><div class="number">{{ $pengajuan->nomorAntrian->nomor_urut }}</div></td>
-                    <td class="ticket-info"><strong>{{ $pengajuan->nomorAntrian->jenis_pelayanan }}</strong><br>{{ $pengajuan->nomorAntrian->nomor_loket }}<br>Berlaku {{ $pengajuan->nomorAntrian->tanggal_antrian->format('d F Y') }}<br>Diambil {{ $pengajuan->nomorAntrian->waktu_pengambilan->format('d-m-Y H:i') }} WIB</td>
+                    <td class="ticket-info"><strong>Jaminan Kematian</strong><br>{{ $pengajuan->nomorAntrian->nomor_loket }}<br>Berlaku {{ $pengajuan->nomorAntrian->tanggal_antrian->format('d F Y') }}<br>Diambil {{ $pengajuan->nomorAntrian->waktu_pengambilan->format('d-m-Y H:i') }} WIB</td>
                 </tr>
             </table>
         </div>

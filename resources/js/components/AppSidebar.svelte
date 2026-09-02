@@ -30,7 +30,7 @@
     const user = $derived(page.props.auth.user);
     const mainNavItems = $derived<NavItem[]>([
         {
-            title: user?.role === 'admin' ? 'Pengajuan klaim' : 'Pengajuan saya',
+            title: user?.role === 'admin' ? 'Pengajuan' : 'Pengajuan saya',
             href: dashboard(),
             icon: user?.role === 'admin' ? ClipboardList : LayoutGrid,
         },
