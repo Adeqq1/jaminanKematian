@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Link } from '@inertiajs/svelte';
-    import BookOpen from '@lucide/svelte/icons/book-open';
-    import FolderGit2 from '@lucide/svelte/icons/folder-git-2';
+    import ClipboardList from '@lucide/svelte/icons/clipboard-list';
     import LayoutGrid from '@lucide/svelte/icons/layout-grid';
+    import { page } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
     import NavFooter from '@/components/NavFooter.svelte';
@@ -27,26 +27,16 @@
         children?: Snippet;
     } = $props();
 
-    const mainNavItems: NavItem[] = [
+    const user = $derived(page.props.auth.user);
+    const mainNavItems = $derived<NavItem[]>([
         {
-            title: 'Dashboard',
+            title: user?.role === 'admin' ? 'Pengajuan' : 'Pengajuan saya',
             href: dashboard(),
-            icon: LayoutGrid,
+            icon: user?.role === 'admin' ? ClipboardList : LayoutGrid,
         },
-    ];
+    ]);
 
-    const footerNavItems: NavItem[] = [
-        {
-            title: 'Repository',
-            href: 'https://github.com/laravel/svelte-starter-kit',
-            icon: FolderGit2,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits#svelte',
-            icon: BookOpen,
-        },
-    ];
+    const footerNavItems: NavItem[] = [];
 </script>
 
 <Sidebar collapsible="icon" variant="inset">

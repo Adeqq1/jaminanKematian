@@ -1,7 +1,7 @@
 <script module lang="ts">
     export const layout = {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
+        title: 'Masuk ke akun',
+        description: 'Masukkan NIK dan kata sandi untuk masuk',
     };
 </script>
 
@@ -16,14 +16,9 @@
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import { Spinner } from '@/components/ui/spinner';
-    /* @chisel-registration */
     import { register } from '@/routes';
-    /* @end-chisel-registration */
     import { store } from '@/routes/login';
-    import { request } from '@/routes/password';
-    /* @chisel-passkeys */
     import PasskeyVerify from '@/components/PasskeyVerify.svelte';
-    /* @end-chisel-passkeys */
 
     let {
         status = '',
@@ -42,9 +37,7 @@
     </div>
 {/if}
 
-<!-- @chisel-passkeys -->
 <PasskeyVerify />
-<!-- @end-chisel-passkeys -->
 
 <Form
     {...store.form()}
@@ -54,33 +47,33 @@
     {#snippet children({ errors, processing })}
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="username">NIK</Label>
                 <Input
-                    id="email"
-                    type="email"
-                    name="email"
+                    id="username"
+                    type="text"
+                    name="username"
                     required
-                    autocomplete="email"
-                    placeholder="email@example.com"
+                    inputmode="numeric"
+                    autocomplete="username"
+                    placeholder="16 digit NIK"
+                    maxlength={16}
+                    oninput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/\D/g, '').slice(0, 16);
+                    }}
                 />
-                <InputError message={errors.email} />
+                <InputError message={errors.username} />
             </div>
 
             <div class="grid gap-2">
                 <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
-                    {#if canResetPassword}
-                        <TextLink href={request()} class="text-sm">
-                            Forgot your password?
-                        </TextLink>
-                    {/if}
+                <Label for="password">Kata sandi</Label>
                 </div>
                 <PasswordInput
                     id="password"
                     name="password"
                     required
                     autocomplete="current-password"
-                    placeholder="Password"
+                    placeholder="Kata sandi"
                 />
                 <InputError message={errors.password} />
             </div>
@@ -88,7 +81,7 @@
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
                     <Checkbox id="remember" name="remember" />
-                    <span>Remember me</span>
+                    <span>Ingat saya di perangkat ini</span>
                 </Label>
             </div>
 
@@ -99,15 +92,15 @@
                 data-test="login-button"
             >
                 {#if processing}<Spinner />{/if}
-                Log in
+                Masuk
             </Button>
         </div>
 
-        <!-- @chisel-registration -->
+        <p class="text-center text-xs text-muted-foreground">Lupa kata sandi? <a class="font-medium text-primary underline" href="tel:+628136184563">Hubungi petugas</a>.</p>
+
         <div class="text-center text-sm text-muted-foreground">
-            Don't have an account?
-            <TextLink href={register()}>Sign up</TextLink>
+             Belum punya akun?
+             <TextLink href={register()}>Daftar</TextLink>
         </div>
-        <!-- @end-chisel-registration -->
     {/snippet}
 </Form>

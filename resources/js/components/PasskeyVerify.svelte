@@ -70,7 +70,7 @@
         </div>
         <div class="relative flex justify-center text-xs uppercase">
             <span class="bg-background px-2 text-muted-foreground">
-                {props.separator ?? 'Or continue with email'}
+                {props.separator ?? 'Atau masuk dengan NIK dan kata sandi'}
             </span>
         </div>
     </div>

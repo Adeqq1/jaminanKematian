@@ -20,7 +20,7 @@
     <AppSidebar />
     <AppContent variant="sidebar" class="min-w-0 overflow-x-clip">
         <AppSidebarHeader {breadcrumbs} />
-        {@render children?.()}
+            <main id="main-content">{@render children?.()}</main>
     </AppContent>
     <Toaster />
 </AppShell>

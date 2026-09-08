@@ -4,7 +4,7 @@
     import { Input } from '@/components/ui/input';
     import { cn } from '@/lib/utils';
 
-    let { class: className = '', ...rest } = $props();
+    let { class: className = '', value = $bindable(), ...rest } = $props();
 
     let showPassword = $state(false);
 </script>
@@ -13,14 +13,14 @@
     <Input
         type={showPassword ? 'text' : 'password'}
         class={cn('pr-10', className)}
+        bind:value
         {...rest}
     />
     <button
         type="button"
         onclick={() => (showPassword = !showPassword)}
         class="text-muted-foreground hover:text-foreground focus-visible:ring-ring absolute inset-y-0 right-0 flex items-center rounded-r-md px-3 focus-visible:outline-none focus-visible:ring-[3px]"
-        aria-label={showPassword ? 'Hide password' : 'Show password'}
-        tabindex={-1}
+            aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
     >
         {#if showPassword}
             <EyeOff class="size-4" />

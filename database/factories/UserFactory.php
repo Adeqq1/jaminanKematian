@@ -12,6 +12,15 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user): void {
+            if ($user->role === 'peserta') {
+                $user->peserta()->create(['nama' => $user->name, 'no_hp' => '081234567890', 'nik' => $user->username, 'foto_ktp' => 'testing/ktp.jpg']);
+            }
+        });
+    }
+
     /**
      * The current password being used by the factory.
      */
@@ -26,39 +35,29 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            'username' => fake()->unique()->numerify('################'),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => 'peserta',
             'remember_token' => Str::random(10),
-            /* @chisel-2fa */
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
-            /* @end-chisel-2fa */
         ];
     }
 
     /**
      * Indicate that the model's email address should be unverified.
      */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
-    }
 
     /**
      * Indicate that the model has two-factor authentication configured.
      */
     public function withTwoFactor(): static
     {
-        /* @chisel-2fa */
         return $this->state(fn (array $attributes) => [
             'two_factor_secret' => encrypt('secret'),
             'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
             'two_factor_confirmed_at' => now(),
         ]);
-        /* @end-chisel-2fa */
     }
 }

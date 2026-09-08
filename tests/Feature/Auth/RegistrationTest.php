@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Laravel\Fortify\Features;
 use Tests\TestCase;
 
@@ -28,7 +29,9 @@ class RegistrationTest extends TestCase
     {
         $response = $this->post(route('register.store'), [
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'nik' => '1234567890123456',
+            'no_hp' => '081234567890',
+            'foto_ktp' => UploadedFile::fake()->createWithContent('ktp.jpg', 'fake-image'),
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
